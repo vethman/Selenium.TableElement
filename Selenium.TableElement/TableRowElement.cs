@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Internal;
+using Selenium.TableElement.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,18 +8,18 @@ using System.Linq;
 
 namespace Selenium.TableElement
 {
-    public class TableRowElement : IWrapsElement
+    public class TableRowElement : IWrapsElement, ITableRowElement
     {
-        public readonly ReadOnlyCollection<IWebElement> _columns;
+        private readonly ReadOnlyCollection<IWebElement> _columns;
         private readonly IDictionary<string, int> _headerIndexer;
 
         public IWebElement WrappedElement { get; }
 
-        public TableRowElement(ReadOnlyCollection<IWebElement> headers, IWebElement wrappedElement, By rowColumnSelector)
+        public TableRowElement(IDictionary<string, int> headerIndexer, IWebElement rowElement, By rowColumnSelector)
         {
-            _columns = ColumnsIncludingColspan(wrappedElement.FindElements(rowColumnSelector));
-            _headerIndexer = HeadersIncludingColspanAndDuplicate(headers);
-            WrappedElement = wrappedElement;
+            _columns = ColumnsIncludingColspan(rowElement.FindElements(rowColumnSelector));
+            _headerIndexer = headerIndexer;
+            WrappedElement = rowElement;
         }
 
         public IWebElement GetColumn(string nameHeader)
@@ -34,16 +35,6 @@ namespace Selenium.TableElement
         public IWebElement GetColumn(int index)
         {
             return _columns[index];
-        }
-
-        private IDictionary<string, int> HeadersIncludingColspanAndDuplicate(ReadOnlyCollection<IWebElement> headers)
-        {
-            return headers
-                .SelectMany(x => Enumerable.Range(0, Convert.ToInt32(x.GetAttribute("colspan") ?? "1")).Select(i => x.Text.Trim()))
-                .Select((text, index) => new { text, index })
-                .GroupBy(x => x.text)
-                .SelectMany(x => x.Select((y, i) => new { text = y.text + (x.Count() > 1 ? "_" + (i + 1) : ""), y.index }))
-                .ToDictionary(x => x.text, x => x.index);
         }
 
         private ReadOnlyCollection<IWebElement> ColumnsIncludingColspan(ReadOnlyCollection<IWebElement> columns)
