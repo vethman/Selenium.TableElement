@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Authors>Ronald Veth</Authors>
+    <Company>Betabit</Company>
+    <Product>Selenium.TableElement</Product>
+    <Description>Having trouble testing tables on your frontend? This package will make it easier.</Description>
+    <PackageProjectUrl>https://github.com/vethman/Selenium.TableElement/tree/main/Selenium.TableElement</PackageProjectUrl>
+    <PackageTags>Selenium, Table, tbody, thead, tr, td, html</PackageTags>
+    <RepositoryUrl>https://github.com/vethman/Selenium.TableElement</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
