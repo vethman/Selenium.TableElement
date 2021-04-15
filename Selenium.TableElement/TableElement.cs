@@ -30,6 +30,11 @@ namespace Selenium.TableElement
 
         private IDictionary<string, int> HeadersIncludingColspanAndDuplicate(ReadOnlyCollection<IWebElement> headers)
         {
+            if(headers.Any(x => !string.IsNullOrEmpty(x.GetAttribute("rowspan"))))
+            {
+                throw new NotSupportedException("TableHeader including rowspan not supported");
+            }
+
             return headers
                 .SelectMany(x => Enumerable.Range(0, Convert.ToInt32(x.GetAttribute("colspan") ?? "1")).Select(i => x.Text.Trim()))
                 .Select((text, index) => new { text, index })

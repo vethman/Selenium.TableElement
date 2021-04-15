@@ -39,6 +39,11 @@ namespace Selenium.TableElement
 
         private ReadOnlyCollection<IWebElement> ColumnsIncludingColspan(ReadOnlyCollection<IWebElement> columns)
         {
+            if (columns.Any(x => !string.IsNullOrEmpty(x.GetAttribute("rowspan"))))
+            {
+                throw new NotSupportedException("TableRow including rowspan not supported");
+            }
+
             return columns
                 .SelectMany(x =>
                 {
