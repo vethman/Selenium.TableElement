@@ -1,7 +1,6 @@
 using FluentAssertions;
 using Microsoft.Edge.SeleniumTools;
 using NUnit.Framework;
-using Selenium.TableElement.Interfaces;
 using Selenium.TableElement.UiTests.PageObjects;
 using System;
 using System.Collections.Generic;
@@ -88,6 +87,19 @@ namespace Selenium.TableElement.UiTests
             
             tableElement.Should().BeAssignableTo<ITableElement>();
             tableElement.TableRowElements.Should().BeAssignableTo<ReadOnlyCollection<ITableRowElement>>();
+        }
+
+        [Test]
+        public void SimpleTable_FindTableWithinElement_SameOutComeAsFromWebDriver()
+        {
+            var simpleTable = new SimpleTable(_webDriver);
+
+            simpleTable.Open();
+
+            var tableElementFromWebDriver = simpleTable.ColspanTableElement;
+            var tableElementFromElement = simpleTable.ColspanTableElementFromWebElement;
+
+            tableElementFromElement.Should().BeEquivalentTo(tableElementFromWebDriver, options => options.Excluding(x => x.SelectedMemberPath.EndsWith("Id")));
         }
 
         [Test]

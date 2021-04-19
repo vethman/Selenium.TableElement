@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using Selenium.TableElement.Interfaces;
 using System;
 using System.IO;
 
