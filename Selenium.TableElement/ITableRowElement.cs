@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace Selenium.TableElement.Interfaces
+namespace Selenium.TableElement
 {
     public interface ITableRowElement
     {

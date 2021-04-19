@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net5.0;netstandard2.0;net46</TargetFrameworks>
     <Authors>Ronald Veth</Authors>
     <Company>Betabit</Company>
     <Product>Selenium.TableElement</Product>
@@ -10,6 +10,8 @@
     <PackageTags>Selenium, Table, tbody, thead, tr, td, html</PackageTags>
     <RepositoryUrl>https://github.com/vethman/Selenium.TableElement</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>Added support for more .net frameworks. FindTableElement now works on WebDriver and WebElement, because of extension on ISearchContext instead of IWebDriver</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

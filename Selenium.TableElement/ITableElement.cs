@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Selenium.TableElement.Interfaces
+namespace Selenium.TableElement
 {
     public interface ITableElement
     {

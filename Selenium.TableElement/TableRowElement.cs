@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Internal;
-using Selenium.TableElement.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

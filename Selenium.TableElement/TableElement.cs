@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using Selenium.TableElement.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,15 +13,15 @@ namespace Selenium.TableElement
         public IEnumerable<string> TableHeaderValues => _headerIndexer.Select(x => x.Key);
         public ReadOnlyCollection<ITableRowElement> TableRowElements { get; private set; }
 
-        public TableElement(IWebDriver webDriver, By headersSelector, By rowsSelector) : this(webDriver, headersSelector, rowsSelector, By.XPath("./td"))
+        public TableElement(ISearchContext searchContext, By headersSelector, By rowsSelector) : this(searchContext, headersSelector, rowsSelector, By.XPath("./td"))
         {
         }
 
-        public TableElement(IWebDriver webDriver, By headersSelector, By rowsSelector, By rowColumnSelector)
+        public TableElement(ISearchContext searchContext, By headersSelector, By rowsSelector, By rowColumnSelector)
         {
-            _headerIndexer = HeadersIncludingColspanAndDuplicate(webDriver.FindElements(headersSelector));
+            _headerIndexer = HeadersIncludingColspanAndDuplicate(searchContext.FindElements(headersSelector));
 
-            TableRowElements = webDriver.FindElements(rowsSelector)
+            TableRowElements = searchContext.FindElements(rowsSelector)
                 .Select(x => (ITableRowElement)new TableRowElement(_headerIndexer, x, rowColumnSelector))
                 .ToList()
                 .AsReadOnly();
