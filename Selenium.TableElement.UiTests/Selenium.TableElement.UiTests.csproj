@@ -30,6 +30,9 @@
     <None Update="DemoHtml\colspanrowtable.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="DemoHtml\divtable.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="DemoHtml\simpletable.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
