@@ -27,7 +27,21 @@ namespace Selenium.TableElement
                 .AsReadOnly();
         }
 
-        private IDictionary<string, int> HeadersIncludingColspanAndDuplicate(ReadOnlyCollection<IWebElement> headers)
+        public TableElement(IEnumerable<IWebElement> headerElements, IEnumerable<IWebElement> rowElements) : this(headerElements, rowElements, By.XPath("./td"))
+        {
+        }
+
+        public TableElement(IEnumerable<IWebElement> headerElements, IEnumerable<IWebElement> rowElements, By rowColumnSelector)
+        {
+            _headerIndexer = HeadersIncludingColspanAndDuplicate(headerElements);
+
+            TableRowElements = rowElements
+                .Select(x => (ITableRowElement)new TableRowElement(_headerIndexer, x, rowColumnSelector))
+                .ToList()
+                .AsReadOnly();
+        }
+
+        private IDictionary<string, int> HeadersIncludingColspanAndDuplicate(IEnumerable<IWebElement> headers)
         {
             if(headers.Any(x => !string.IsNullOrEmpty(x.GetAttribute("rowspan"))))
             {

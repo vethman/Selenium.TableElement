@@ -10,8 +10,8 @@
     <PackageTags>Selenium, Table, tbody, thead, tr, td, html</PackageTags>
     <RepositoryUrl>https://github.com/vethman/Selenium.TableElement</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.2</Version>
-    <PackageReleaseNotes>Added the ability to specify a specific columnselector. Default is td, but could be different when testing a div table.</PackageReleaseNotes>
+    <Version>1.0.3</Version>
+    <PackageReleaseNotes>Overloaded extension FindTableElement. Added the ability to pass a collection of header elements and rowelements. There can be usecases that we have to wait for elements state. Now you can do that and pass the outcome to FindTableElement.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
