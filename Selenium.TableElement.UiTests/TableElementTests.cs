@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Microsoft.Edge.SeleniumTools;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using Selenium.TableElement.UiTests.PageObjects;
 using System;
 using System.Collections.Generic;
@@ -97,7 +98,23 @@ namespace Selenium.TableElement.UiTests
             simpleTable.Open();
 
             var tableElementFromWebDriver = simpleTable.ColspanTableElement;
-            var tableElementFromElement = simpleTable.ColspanTableElementFromWebElement;
+            var tableElementFromElement = simpleTable.TableParent.FindTableElement(By.XPath("./thead/tr/th"), By.XPath("./tbody/tr"));
+
+            tableElementFromElement.Should().BeEquivalentTo(tableElementFromWebDriver, options => options.Excluding(x => x.SelectedMemberPath.EndsWith("Id")));
+        }
+
+        [Test]
+        public void SimpleTable_FindTableElement_UseCollectionOfHeaderElementsAndRowElements()
+        {
+            var simpleTable = new SimpleTable(_webDriver);
+
+            simpleTable.Open();
+
+            var tableElementFromWebDriver = simpleTable.ColspanTableElement;
+
+            var tableHeaderCollection = simpleTable.TableHeaders;
+            var tableRowCollection = simpleTable.TableRows;
+            var tableElementFromElement = _webDriver.FindTableElement(tableHeaderCollection, tableRowCollection);
 
             tableElementFromElement.Should().BeEquivalentTo(tableElementFromWebDriver, options => options.Excluding(x => x.SelectedMemberPath.EndsWith("Id")));
         }

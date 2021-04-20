@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 
 namespace Selenium.TableElement.UiTests.PageObjects
@@ -9,9 +10,9 @@ namespace Selenium.TableElement.UiTests.PageObjects
         private readonly IWebDriver _webDriver;
 
         public ITableElement ColspanTableElement => _webDriver.FindTableElement(By.XPath("//table/thead/tr/th"), By.XPath("//table/tbody/tr"));
-
-        public ITableElement ColspanTableElementFromWebElement => TableParent.FindTableElement(By.XPath("./thead/tr/th"), By.XPath("./tbody/tr"));
-        private IWebElement TableParent => _webDriver.FindElement(By.TagName("table"));
+        public IWebElement TableParent => _webDriver.FindElement(By.TagName("table"));
+        public ReadOnlyCollection<IWebElement> TableHeaders => _webDriver.FindElements(By.XPath("//table/thead/tr/th"));
+        public ReadOnlyCollection<IWebElement> TableRows => _webDriver.FindElements(By.XPath("//table/tbody/tr"));
 
         public SimpleTable(IWebDriver webDriver)
         {
