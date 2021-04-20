@@ -10,8 +10,8 @@
     <PackageTags>Selenium, Table, tbody, thead, tr, td, html</PackageTags>
     <RepositoryUrl>https://github.com/vethman/Selenium.TableElement</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>Added support for more .net frameworks. FindTableElement now works on WebDriver and WebElement, because of extension on ISearchContext instead of IWebDriver</PackageReleaseNotes>
+    <Version>1.0.2</Version>
+    <PackageReleaseNotes>Added the ability to specify a specific columnselector. Default is td, but could be different when testing a div table.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

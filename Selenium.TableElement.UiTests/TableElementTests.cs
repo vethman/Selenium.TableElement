@@ -37,7 +37,7 @@ namespace Selenium.TableElement.UiTests
         [Test]
         public void SimpleTable_HeaderValues()
         {
-            var expectedHeaders = new List<string>() { "Firstname", "Lastname", "Date of birth" };
+            var expectedHeaders = new List<string>() { "First name", "Last name", "Date of birth" };
 
             var simpleTable = new SimpleTable(_webDriver);
 
@@ -57,9 +57,9 @@ namespace Selenium.TableElement.UiTests
             simpleTable.Open();
 
             var tableElement = simpleTable.ColspanTableElement;
-            var tableRowElement = tableElement.TableRowElements.Single(x => x.GetColumn("Firstname").Text == "Beta");
+            var tableRowElement = tableElement.TableRowElements.Single(x => x.GetColumn("First name").Text == "Beta");
 
-            tableRowElement.GetColumn("Lastname").Text.Should().Be("Bit");
+            tableRowElement.GetColumn("Last name").Text.Should().Be("Bit");
             tableRowElement.GetColumn("Date of birth").Text.Should().Be("01-10-2002");
         }
 
@@ -187,6 +187,48 @@ namespace Selenium.TableElement.UiTests
             rowspanRowTable.Invoking(x => x.RowspanRowTableElement)
                 .Should().Throw<NotSupportedException>()
                 .WithMessage("TableRow including rowspan not supported");
+        }
+
+        [Test]
+        public void DivTable_HeaderValues()
+        {
+            var expectedHeaders = new List<string>() { "First name", "Last name", "Specialty" };
+
+            var divTable = new DivTable(_webDriver);
+
+            divTable.Open();
+
+            var tableElement = divTable.DivTableElement;
+            var tableHeaderValues = tableElement.TableHeaderValues;
+
+            tableHeaderValues.Should().BeEquivalentTo(expectedHeaders, options => options.WithStrictOrdering());
+        }
+
+        [Test]
+        public void DivTable_MatchHeaderWithColumn()
+        {
+            var divTable = new DivTable(_webDriver);
+
+            divTable.Open();
+
+            var tableElement = divTable.DivTableElement;
+            var tableRowElement = tableElement.TableRowElements.Single(x => x.GetColumn("First name").Text == "Beta");
+
+            tableRowElement.GetColumn("Last name").Text.Should().Be("Bit");
+            tableRowElement.GetColumn("Specialty").Text.Should().Be("Make special together");
+        }
+
+        [Test]
+        public void DivTable_HasRowsAndHeaders()
+        {
+            var divTable = new DivTable(_webDriver);
+
+            divTable.Open();
+
+            var tableElement = divTable.DivTableElement;
+
+            tableElement.TableHeaderValues.Should().HaveCount(3);
+            tableElement.TableRowElements.Should().HaveCount(3);
         }
     }
 }
