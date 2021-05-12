@@ -10,8 +10,8 @@
     <PackageTags>Selenium, Table, tbody, thead, tr, td, html</PackageTags>
     <RepositoryUrl>https://github.com/vethman/Selenium.TableElement</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.4</Version>
-    <PackageReleaseNotes>TableRowElement can now be created with own headerindexer by given IWebElementCollection that represents headers. Added DocumentationFile</PackageReleaseNotes>
+    <Version>1.0.5</Version>
+    <PackageReleaseNotes>Added missing documentation</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
