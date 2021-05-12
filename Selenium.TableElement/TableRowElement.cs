@@ -16,9 +16,23 @@ namespace Selenium.TableElement
         private readonly IDictionary<string, int> _headerIndexer;
 
         /// <summary>
+        /// All found headers, handy to verify if headerSelector/headerElements results in correct header values.
+        /// </summary>
+        public IEnumerable<string> TableHeaderValues => _headerIndexer.Select(x => x.Key);
+
+        /// <summary>
         /// Gets the <see cref="IWebElement"/> wrapped by this object.
         /// </summary>
         public IWebElement WrappedElement { get; }
+
+        /// <summary>
+        /// Creates TableRowElement. Default columnselector By.XPath("./td")
+        /// </summary>
+        /// <param name="headerIndexer">Indexer that contains header values</param>
+        /// <param name="rowElement">IWebelement that represents row</param>
+        public TableRowElement(IDictionary<string, int> headerIndexer, IWebElement rowElement) : this (headerIndexer, rowElement, By.XPath("./td"))
+        {
+        }
 
         /// <summary>
         /// Creates TableRowElement
@@ -31,6 +45,15 @@ namespace Selenium.TableElement
             _columns = ColumnsIncludingColspan(rowElement.FindElements(rowColumnSelector));
             _headerIndexer = headerIndexer;
             WrappedElement = rowElement;
+        }
+
+        /// <summary>
+        /// Creates TableRowElement. Default columnselector By.XPath("./td")
+        /// </summary>
+        /// <param name="headerElements">Collection of IWebelements that represents headerColumns</param>
+        /// <param name="rowElement">IWebelement that represents row</param>
+        public TableRowElement(IEnumerable<IWebElement> headerElements, IWebElement rowElement) : this(headerElements, rowElement, By.XPath("./td"))
+        {
         }
 
         /// <summary>
@@ -55,7 +78,7 @@ namespace Selenium.TableElement
         {
             if (!_headerIndexer.TryGetValue(nameHeader, out int result))
             {
-                throw new NoSuchElementException($"Header '{nameHeader}' does not exist, available headers: {string.Join(Environment.NewLine, _headerIndexer.Select(x => x.Key))}");
+                throw new NoSuchElementException($"Header '{nameHeader}' does not exist, available headers:{Environment.NewLine + string.Join(Environment.NewLine, _headerIndexer.Select(x => x.Key))}");
             }
 
             return _columns[result];

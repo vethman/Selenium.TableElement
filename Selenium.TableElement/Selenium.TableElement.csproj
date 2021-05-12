@@ -10,8 +10,13 @@
     <PackageTags>Selenium, Table, tbody, thead, tr, td, html</PackageTags>
     <RepositoryUrl>https://github.com/vethman/Selenium.TableElement</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.3</Version>
-    <PackageReleaseNotes>Overloaded extension FindTableElement. Added the ability to pass a collection of header elements and rowelements. There can be usecases that we have to wait for elements state. Now you can do that and pass the outcome to FindTableElement.</PackageReleaseNotes>
+    <Version>1.0.4</Version>
+    <PackageReleaseNotes>TableRowElement can now be created with own headerindexer by given IWebElementCollection that represents headers. Added DocumentationFile</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

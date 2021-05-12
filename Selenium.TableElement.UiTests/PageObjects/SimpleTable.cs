@@ -13,6 +13,24 @@ namespace Selenium.TableElement.UiTests.PageObjects
         public IWebElement TableParent => _webDriver.FindElement(By.TagName("table"));
         public ReadOnlyCollection<IWebElement> TableHeaders => _webDriver.FindElements(By.XPath("//table/thead/tr/th"));
         public ReadOnlyCollection<IWebElement> TableRows => _webDriver.FindElements(By.XPath("//table/tbody/tr"));
+        public ITableRowElement SingleTableRowWithoutColumnSelector
+        {
+            get
+            {
+                var headers = _webDriver.FindElements(By.XPath("//table/thead/tr/th"));
+                var row = _webDriver.FindElement(By.XPath("//table/tbody/tr"));
+                return new TableRowElement(headers, row);
+            }
+        }
+        public ITableRowElement SingleTableRowWithColumnSelector
+        {
+            get
+            {
+                var headers = _webDriver.FindElements(By.XPath("//table/thead/tr/th"));
+                var row = _webDriver.FindElement(By.XPath("//table/tbody/tr"));
+                return new TableRowElement(headers, row, By.XPath("./td"));
+            }
+        }
 
         public SimpleTable(IWebDriver webDriver)
         {

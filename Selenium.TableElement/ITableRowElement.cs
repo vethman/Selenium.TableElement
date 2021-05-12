@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System.Collections.Generic;
 
 namespace Selenium.TableElement
 {
@@ -11,7 +12,10 @@ namespace Selenium.TableElement
         /// Gets the <see cref="IWebElement"/> wrapped by this object.
         /// </summary>
         IWebElement WrappedElement { get; }
-
+        /// <summary>
+        /// All found headers, handy to verify if headerSelector/headerElements results in correct header values.
+        /// </summary>
+        IEnumerable<string> TableHeaderValues { get; }
         /// <summary>
         /// Get a column of the tablerow.
         /// </summary>

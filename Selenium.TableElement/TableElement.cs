@@ -9,7 +9,7 @@ namespace Selenium.TableElement
     /// TableElement supports testing Html Tables with Selenium.
     /// <list type="bullet">
     /// <item><description>All found headers to verify if headerselector gives correct headers</description></item>
-    /// <item><description>Collection of <see cref="ITableRowElement"></description></item>
+    /// <item><description>Collection of ITableRowElements</description></item>
     /// </list>
     /// </summary>
     public class TableElement : ITableElement
@@ -17,7 +17,7 @@ namespace Selenium.TableElement
         private readonly IDictionary<string, int> _headerIndexer;
 
         /// <summary>
-        /// All found headers, handy to verify if headerSelector/headerElements is correct
+        /// All found headers, handy to verify if headerSelector/headerElements results in correct header values.
         /// </summary>
         public IEnumerable<string> TableHeaderValues => _headerIndexer.Select(x => x.Key);
         /// <summary>
@@ -26,7 +26,7 @@ namespace Selenium.TableElement
         public ReadOnlyCollection<ITableRowElement> TableRowElements { get; private set; }
 
         /// <summary>
-        /// Creates TableElement that contains zero or multiple TableElementRows
+        /// Creates TableElement that contains zero or multiple TableElementRows. Default columnselector By.XPath("./td")
         /// </summary>
         /// <param name="searchContext">Given context to find headers and rows</param>
         /// <param name="headersSelector">Selector to find IWebElements representing headercolumns</param>
@@ -53,7 +53,7 @@ namespace Selenium.TableElement
         }
 
         /// <summary>
-        /// Creates TableElement that contains zero or multiple TableElementRows
+        /// Creates TableElement that contains zero or multiple TableElementRows. Default columnselector By.XPath("./td")
         /// </summary>
         /// <param name="headerElements">Collection of IWebElements representing headercolumns</param>
         /// <param name="rowElements">Collection of IWebElements representing rows</param>
