@@ -45,9 +45,22 @@ namespace Selenium.TableElement.UiTests
             simpleTable.Open();
 
             var tableElement = simpleTable.ColspanTableElement;
-            var tableHeaderValues = tableElement.TableHeaderValues;
 
-            tableHeaderValues.Should().BeEquivalentTo(expectedHeaders, options => options.WithStrictOrdering());
+            tableElement.TableHeaderValues.Should().BeEquivalentTo(expectedHeaders, options => options.WithStrictOrdering());
+            tableElement.TableRowElements.First().TableHeaderValues.Should().BeEquivalentTo(expectedHeaders, options => options.WithStrictOrdering());
+        }
+
+        [Test]
+        public void SimpleTable_HeaderValueNotFound_ThrowsNoSuchElementException()
+        {
+            var simpleTable = new SimpleTable(_webDriver);
+
+            simpleTable.Open();
+
+            var tableElement = simpleTable.ColspanTableElement;
+
+            Action act = () => tableElement.TableRowElements.First().GetColumn("NotExistingHeaderError");
+            act.Should().Throw<NoSuchElementException>().WithMessage("Header 'NotExistingHeaderError' does not exist, available headers:\nFirst name\nLast name\nDate of birth");
         }
 
         [Test]
@@ -117,6 +130,34 @@ namespace Selenium.TableElement.UiTests
             var tableElementFromElement = _webDriver.FindTableElement(tableHeaderCollection, tableRowCollection);
 
             tableElementFromElement.Should().BeEquivalentTo(tableElementFromWebDriver, options => options.Excluding(x => x.SelectedMemberPath.EndsWith("Id")));
+        }
+
+        [Test]
+        public void SimpleTable_TableRowElementWithColumnSelector()
+        {
+            var simpleTable = new SimpleTable(_webDriver);
+
+            simpleTable.Open();
+
+            var tableRowElement = simpleTable.SingleTableRowWithColumnSelector;
+
+            tableRowElement.GetColumn(0).Text.Should().Be("Ronald");
+            tableRowElement.GetColumn("Last name").Text.Should().Be("Veth");
+            tableRowElement.GetColumn("Date of birth").Text.Should().Be("22-12-1987");
+        }
+
+        [Test]
+        public void SimpleTable_TableRowElementWithoutColumnSelector()
+        {
+            var simpleTable = new SimpleTable(_webDriver);
+
+            simpleTable.Open();
+
+            var tableRowElement = simpleTable.SingleTableRowWithoutColumnSelector;
+
+            tableRowElement.GetColumn(0).Text.Should().Be("Ronald");
+            tableRowElement.GetColumn("Last name").Text.Should().Be("Veth");
+            tableRowElement.GetColumn("Date of birth").Text.Should().Be("22-12-1987");
         }
 
         [Test]
@@ -215,20 +256,34 @@ namespace Selenium.TableElement.UiTests
 
             divTable.Open();
 
-            var tableElement = divTable.DivTableElement;
+            var tableElement = divTable.DivTableElementBySelectors;
             var tableHeaderValues = tableElement.TableHeaderValues;
 
             tableHeaderValues.Should().BeEquivalentTo(expectedHeaders, options => options.WithStrictOrdering());
         }
 
         [Test]
-        public void DivTable_MatchHeaderWithColumn()
+        public void DivTable_MatchHeaderWithColumn_TableElementBySelectors()
         {
             var divTable = new DivTable(_webDriver);
 
             divTable.Open();
 
-            var tableElement = divTable.DivTableElement;
+            var tableElement = divTable.DivTableElementBySelectors;
+            var tableRowElement = tableElement.TableRowElements.Single(x => x.GetColumn("First name").Text == "Beta");
+
+            tableRowElement.GetColumn("Last name").Text.Should().Be("Bit");
+            tableRowElement.GetColumn("Specialty").Text.Should().Be("Make special together");
+        }
+
+        [Test]
+        public void DivTable_MatchHeaderWithColumn_TableElementByElements()
+        {
+            var divTable = new DivTable(_webDriver);
+
+            divTable.Open();
+
+            var tableElement = divTable.DivTableElementByElements;
             var tableRowElement = tableElement.TableRowElements.Single(x => x.GetColumn("First name").Text == "Beta");
 
             tableRowElement.GetColumn("Last name").Text.Should().Be("Bit");
@@ -242,10 +297,30 @@ namespace Selenium.TableElement.UiTests
 
             divTable.Open();
 
-            var tableElement = divTable.DivTableElement;
+            var tableElement = divTable.DivTableElementBySelectors;
 
             tableElement.TableHeaderValues.Should().HaveCount(3);
             tableElement.TableRowElements.Should().HaveCount(3);
+        }
+
+        [Test]
+        public void ButtonTable_ClickButtonInRow()
+        {
+            var buttonTable = new ButtonTable(_webDriver);
+
+            buttonTable.Open();
+
+            var buttonTableRows = buttonTable.buttonTableRows;
+
+            buttonTableRows.Should().HaveCount(3);
+
+            var secondRow = buttonTableRows.Single(x => x.Rownumber == "Row 2");
+            secondRow.DeleteButton.Click();
+
+            buttonTableRows = buttonTable.buttonTableRows;
+            buttonTableRows.Should().HaveCount(2);
+            buttonTableRows.Should().ContainSingle(x => x.Rownumber == "Row 1");
+            buttonTableRows.Should().ContainSingle(x => x.Rownumber == "Row 3");
         }
     }
 }
