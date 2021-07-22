@@ -10,8 +10,8 @@
     <PackageTags>Selenium, Table, tbody, thead, tr, td, html</PackageTags>
     <RepositoryUrl>https://github.com/vethman/Selenium.TableElement</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.5</Version>
-    <PackageReleaseNotes>Added missing documentation</PackageReleaseNotes>
+    <Version>1.0.6</Version>
+    <PackageReleaseNotes>Not using IWrapsElement anymore, because moved in Selenium 4</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

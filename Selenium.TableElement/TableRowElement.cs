@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Internal;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +9,7 @@ namespace Selenium.TableElement
     /// <summary>
     /// TableRowElement supports testing Html TableRows with Selenium.
     /// </summary>
-    public class TableRowElement : IWrapsElement, ITableRowElement
+    public class TableRowElement : ITableRowElement
     {
         private readonly ReadOnlyCollection<IWebElement> _columns;
         private readonly IDictionary<string, int> _headerIndexer;
